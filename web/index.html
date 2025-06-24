@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <base href="$FLUTTER_BASE_HREF">
+
+    <meta charset="UTF-8">
+    <meta content="IE=Edge" http-equiv="X-UA-Compatible">
+    <meta name="description" content="TrouveTonPro - Plateforme de mise en relation avec des professionnels">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <!-- iOS Meta Tags -->
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+    <meta name="apple-mobile-web-app-title" content="TrouveTonPro">
+    <link rel="apple-touch-icon" href="icons/Icon-192.png">
+
+    <!-- PWA Config -->
+    <meta name="theme-color" content="#E9717D">
+    <meta name="mobile-web-app-capable" content="yes">
+    <link rel="manifest" href="manifest.json">
+    <link rel="icon" type="image/png" href="favicon.png">
+    <title>TrouveTonPro</title>
+
+    <!-- Google Identity Services -->
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <script>
+      window.onGoogleAuthLoad = function() {
+        google.accounts.id.initialize({
+          client_id: "928626262111-ru9vjs53a9r14gqbp09g8mgk1q88vj47.apps.googleusercontent.com",
+          callback: (response) => {
+            if (response.credential) {
+              console.debug("Google ID token received");
+              window.localStorage.setItem('google_id_token', response.credential);
+              
+              // Communication avec Flutter
+              if (window.flutterWebAppChannel) {
+                window.flutterWebAppChannel.postMessage({
+                  'type': 'google_signin',
+                  'token': response.credential
+                });
+              }
+            }
+          },
+          ux_mode: "popup",
+          auto_select: false
+        });
+
+        // Optionnel: Afficher le bouton One Tap
+        google.accounts.id.prompt();
+      };
+    </script>
+
+    <!-- Facebook SDK -->
+    <script async defer crossorigin="anonymous" 
+      src="https://connect.facebook.net/fr_FR/sdk.js#xfbml=1&version=v19.0&appId=1236938457818163&autoLogAppEvents=1">
+    </script>
+    <script>
+      window.fbAsyncInit = function() {
+        FB.init({
+          appId: '1236938457818163',
+          cookie: true,
+          xfbml: true,
+          version: 'v19.0'
+        });
+        
+        FB.getLoginStatus(function(response) {
+          if (response.status === 'connected') {
+            console.debug("Facebook auth status: connected");
+          }
+        });
+      };
+    </script>
+
+    <!-- Ajout crucial pour la sélection d'images sur le web -->
+    <script>
+      // Polyfill pour DeviceInfoPlugin sur le web
+      if (typeof window.DeviceInfoPlugin === 'undefined') {
+        window.DeviceInfoPlugin = {
+          androidInfo: {
+            then: function(callback) {
+              return callback({ 
+                version: { 
+                  sdkInt: 33 // Simule Android 13+ pour le web
+                } 
+              });
+            }
+          }
+        };
+      }
+    </script>
+  </head>
+
+  <body>
+    <!-- Conteneurs pour les boutons de connexion (optionnel) -->
+    <div id="googleSignInContainer" style="display: none;">
+      <div id="googleSignInButton"></div>
+    </div>
+
+    <div id="fb-root"></div>
+    <div id="facebookLoginButton" 
+         class="fb-login-button" 
+         data-width="" 
+         data-size="large" 
+         data-button-type="login_with" 
+         data-layout="default" 
+         data-auto-logout-link="false" 
+         data-use-continue-as="false"
+         style="display: none;">
+    </div>
+
+    <!-- Flutter App -->
+    <script src="flutter_bootstrap.js" async></script>
+
+    <script>
+      // Initialisation différée pour éviter les conflits
+      document.addEventListener('DOMContentLoaded', function() {
+        if (window.google && google.accounts) {
+          window.onGoogleAuthLoad();
+        } else {
+          document.addEventListener('google-js-api-load', window.onGoogleAuthLoad);
+        }
+        
+        // Configuration pour le web seulement
+        if (window.location.hostname === 'localhost' || window.location.hostname === '127.0.0.1') {
+          console.debug("Mode développement web détecté");
+          
+          // Simuler les permissions pour le développement web
+          window.PermissionHandler = {
+            request: async () => 'granted',
+            isGranted: () => true
+          };
+        }
+      });
+    </script>
+  </body>
+</html>
