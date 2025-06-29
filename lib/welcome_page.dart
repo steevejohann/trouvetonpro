@@ -30,9 +30,10 @@ class WelcomePage extends StatelessWidget {
                 TanosAnimation(
                   delay: 1500,
                   child: Container(
-                    height: 90,
+                    height: 100,
+                    width: 100,
                     decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
+                      borderRadius: BorderRadius.circular(200),
                     ),
                     child: ClipRRect(
                       borderRadius: BorderRadius.circular(20),
@@ -93,7 +94,7 @@ class WelcomePage extends StatelessWidget {
                     width: double.infinity,
                     child: ElevatedButton(
                       style: ElevatedButton.styleFrom(
-                        backgroundColor: d_red,
+                        backgroundColor: const Color.fromARGB(255, 18, 4, 99),
                         shape: const StadiumBorder(),
                         padding: const EdgeInsets.all(13),
                       ),

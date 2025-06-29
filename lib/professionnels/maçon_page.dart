@@ -17,14 +17,14 @@ const Color accentColor = Color(0xFFFFC107); // Jaune doré
 const Color successColor = Color(0xFF4CAF50); // Vert
 const Color dangerColor = Color(0xFFF44336); // Rouge
 
-class ProfessionalPage extends StatefulWidget {
-  const ProfessionalPage({super.key});
+class MaconPage extends StatefulWidget {
+  const MaconPage({super.key});
 
   @override
-  State<ProfessionalPage> createState() => _ProfessionalPageState();
+  State<MaconPage> createState() => _ProfessionalPageState();
 }
 
-class _ProfessionalPageState extends State<ProfessionalPage> {
+class _ProfessionalPageState extends State<MaconPage> {
   List<String> imageList = [
     'assets/images/batiplus_1.jpeg',
     'assets/images/sogametec_1.jpeg',
@@ -36,12 +36,12 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
   final picker = ImagePicker();
   File? profileImage; // Pour stocker la nouvelle photo de profil
 
-  String name = 'Jean Dupont | N°074481520 ';
-  String status = 'Électricien | Libre aujourd\'hui | localisation: Akanda';
-  String service1 = 'Installation électrique complète';
-  String price1 = '80 000 FCFA';
-  String service2 = 'Réparation d\'urgence';
-  String price2 = '30 000 FCFA';
+  String name = 'john Snow | N°066955335 ';
+  String status = 'Maçon | occupé aujourd\'hui | localisation: Akanda';
+  String service1 = 'Constrution complète de vos projets immobiliers';
+  String price1 = '400 000 FCFA';
+  String service2 = 'Crépissage';
+  String price2 = '100 000 FCFA';
   double rating = 0;
   double averageRating = 3.7;
   List<double> allRatings = [];
@@ -458,7 +458,7 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
                     const SizedBox(height: 12),
                     
                     // Champs spécifiques pour l'installation électrique
-                    if (service.contains('Installation électrique'))
+                    if (service.contains('Montage des briques'))
                       Column(
                         children: [
                           Text('Superficie: ${superficie.toInt()} m²',
@@ -843,7 +843,7 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/realisationelec_1.jpg'),
+                        image: AssetImage('assets/images/macon_3.jpeg'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -854,7 +854,7 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
                     decoration: BoxDecoration(
                       borderRadius: BorderRadius.circular(8),
                       image: const DecorationImage(
-                        image: AssetImage('assets/images/realisationelec_2.jpg'),
+                        image: AssetImage('assets/images/chantier_1.jpeg'),
                         fit: BoxFit.cover,
                       ),
                     ),
@@ -930,12 +930,12 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
             ),
             const SizedBox(height: 8),
             ListTile(
-              title: Text('Branchement défectueux à réparer', 
+              title: Text('constrution de chateaux', 
                 style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-              subtitle: Text('Client: Paul Bongo | Libreville', 
+              subtitle: Text('Client: marie Koumba | Libreville', 
                 style: GoogleFonts.poppins(color: Colors.grey[600])),
               trailing: ElevatedButton(
-                onPressed: () => _repondreClient('Branchement défectueux', 'Paul Bongo'),
+                onPressed: () => _repondreClient('crépissage', 'Paul Bongo'),
                 style: ElevatedButton.styleFrom(
                   backgroundColor: successColor,
                   foregroundColor: Colors.white,
@@ -944,7 +944,7 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
               ),
             ),
             ListTile(
-              title: Text('Pose de prises électriques', 
+              title: Text('fouille', 
                 style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
               subtitle: Text('Client: Alice Nguema | Akanda', 
                 style: GoogleFonts.poppins(color: Colors.grey[600])),

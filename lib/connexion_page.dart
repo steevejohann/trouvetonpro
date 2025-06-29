@@ -124,7 +124,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                       Text(
                         'Votre projet de construction en clic.',
                         style: GoogleFonts.poppins(
-                          color: d_red,
+                          color: const Color.fromARGB(255, 3, 58, 104),
                           fontSize: 16,
                           fontWeight: FontWeight.w600,
                         ),
@@ -134,7 +134,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         'Connectez-vous à votre compte',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
-                          color: Colors.grey[300],
+                          color: const Color.fromARGB(255, 224, 224, 224),
                           fontSize: 16,
                         ),
                       ),
@@ -155,7 +155,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         ),
                         style: ElevatedButton.styleFrom(
                           shape: const StadiumBorder(),
-                          backgroundColor: d_red,
+                          backgroundColor: const Color.fromARGB(255, 18, 4, 99),
                           padding: const EdgeInsets.all(13),
                           minimumSize: const Size(double.infinity, 50),
                         ),
@@ -176,12 +176,12 @@ class _ConnexionPageState extends State<ConnexionPage> {
                           backgroundColor: Colors.white,
                           padding: const EdgeInsets.all(13),
                           minimumSize: const Size(double.infinity, 50),
-                          side: const BorderSide(color: Colors.grey),
+                          side: const BorderSide(color: Color.fromARGB(255, 18, 4, 99)),
                         ),
                         child: Row(
                           mainAxisAlignment: MainAxisAlignment.center,
                           children: [
-                            const Icon(FontAwesomeIcons.google, color: Colors.red),
+                            const Icon(FontAwesomeIcons.google, color: Color.fromARGB(255, 18, 4, 99)),
                             const SizedBox(width: 10),
                             Text(
                               'GOOGLE',
@@ -203,7 +203,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                           'Vous n\'avez pas de compte ? Inscrivez-vous',
                           style: GoogleFonts.poppins(
                             fontSize: 16,
-                            color: d_red,
+                            color: const Color.fromARGB(255, 18, 4, 99),
                             decoration: TextDecoration.underline,
                           ),
                         ),
