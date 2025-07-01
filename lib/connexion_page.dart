@@ -12,8 +12,9 @@ import 'professionnels/electricien_page.dart';
 import 'package:trouvetonpro/client_page.dart';
 
 const d_red = Color(0xFFE9717D);
-const d_backgroundTop = Color(0xFF1E2A38);
-const d_backgroundBottom = Color(0xFFEEF1F5);
+// 🎨 Nouvelle couleur de fond pour correspondre au design de l'image
+const d_backgroundTop = Color(0xFFEAF1F8); // Bleu très clair
+const d_backgroundBottom = Color(0xFFFFFFFF); // Blanc
 
 class ConnexionPage extends StatefulWidget {
   const ConnexionPage({Key? key}) : super(key: key);
@@ -134,7 +135,7 @@ class _ConnexionPageState extends State<ConnexionPage> {
                         'Connectez-vous à votre compte',
                         textAlign: TextAlign.center,
                         style: GoogleFonts.poppins(
-                          color: const Color.fromARGB(255, 224, 224, 224),
+                          color: const Color.fromARGB(255, 90, 90, 90),
                           fontSize: 16,
                         ),
                       ),
@@ -219,3 +220,4 @@ class _ConnexionPageState extends State<ConnexionPage> {
     );
   }
 }
+

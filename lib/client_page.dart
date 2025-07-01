@@ -5,9 +5,8 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
 import 'package:trouvetonpro/professionnels/electricien_page.dart';
-import 'package:trouvetonpro/professionnels/maçon_page.dart'; // Importation ajoutée
+import 'package:trouvetonpro/professionnels/maçon_page.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-
 
 // Couleurs principales de l'application
 const Color primaryColor = Color(0xFF0D47A1); // Bleu profond
@@ -15,6 +14,10 @@ const Color secondaryColor = Color(0xFF64B5F6); // Bleu clair
 const Color accentColor = Color(0xFFFFC107); // Jaune doré
 const Color successColor = Color(0xFF4CAF50); // Vert
 const Color dangerColor = Color(0xFFF44336); // Rouge
+
+// NOUVELLES COULEURS DE FOND
+const d_backgroundTop = Color(0xFFEAF1F8); // Bleu clair en haut
+const d_backgroundBottom = Color(0xFFFFFFFF); // Blanc en bas
 
 class ClientPage extends StatefulWidget {
   const ClientPage({super.key});
@@ -30,7 +33,7 @@ class _ClientPageState extends State<ClientPage> {
   File? _profileImage;
   String _name = 'Marie Koumba';
   String _about = "Vous cherchez des professionnels qualifiés pour vos travaux de maison (plomberie, électricité, peinture, etc.).";
-  String? _profileImagePath; // Pour sauvegarder le chemin de l'image
+  String? _profileImagePath;
 
   final List<String> categories = [
     'Tous',
@@ -155,7 +158,7 @@ class _ClientPageState extends State<ClientPage> {
                   _name = nameController.text;
                   _about = aboutController.text;
                 });
-                _saveProfile(); // Sauvegarder les modifications
+                _saveProfile();
                 Navigator.pop(context);
                 ScaffoldMessenger.of(context).showSnackBar(
                   const SnackBar(
@@ -196,7 +199,6 @@ class _ClientPageState extends State<ClientPage> {
               if (user != null) {
                 await user.delete();
                 if (mounted) {
-                  // Supprimer aussi les données de profil
                   final prefs = await SharedPreferences.getInstance();
                   await prefs.remove('client_name');
                   await prefs.remove('client_about');
@@ -224,7 +226,7 @@ class _ClientPageState extends State<ClientPage> {
     return Card(
       elevation: 3,
       shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-      color: secondaryColor.withOpacity(0.1),
+      color: Colors.white.withOpacity(0.9), // Fond blanc légèrement transparent
       child: Container(
         height: 150,
         padding: const EdgeInsets.all(16),
@@ -248,10 +250,10 @@ class _ClientPageState extends State<ClientPage> {
     if (selectedCategory == 'Tous') {
       return Column(
         children: [
-          // Bouton pour l'électricien
           Card(
             elevation: 2,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            color: Colors.white, // Fond blanc
             child: ListTile(
               leading: Icon(FontAwesomeIcons.bolt, color: accentColor),
               title: Text('Électricien disponible', 
@@ -267,12 +269,11 @@ class _ClientPageState extends State<ClientPage> {
               },
             ),
           ),
-          const SizedBox(height: 12), // Espace entre les boutons
-          
-          // Bouton pour le maçon
+          const SizedBox(height: 12),
           Card(
             elevation: 2,
             shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+            color: Colors.white, // Fond blanc
             child: ListTile(
               leading: Icon(Icons.construction, color: Colors.brown),
               title: Text('Maçon disponible', 
@@ -294,6 +295,7 @@ class _ClientPageState extends State<ClientPage> {
       return Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: Colors.white, // Fond blanc
         child: ListTile(
           leading: Icon(FontAwesomeIcons.bolt, color: accentColor),
           title: Text('Électricien disponible', 
@@ -313,6 +315,7 @@ class _ClientPageState extends State<ClientPage> {
       return Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: Colors.white, // Fond blanc
         child: ListTile(
           leading: Icon(Icons.construction, color: Colors.brown),
           title: Text('Maçon disponible', 
@@ -332,6 +335,7 @@ class _ClientPageState extends State<ClientPage> {
       return Card(
         elevation: 2,
         shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+        color: Colors.white, // Fond blanc
         child: ListTile(
           leading: Icon(Icons.build_circle, color: Colors.grey),
           title: Text('$selectedCategory disponible',
@@ -382,224 +386,246 @@ class _ClientPageState extends State<ClientPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            TextField(
-              decoration: InputDecoration(
-                hintText: 'Rechercher un professionnel...',
-                prefixIcon: const Icon(Icons.search, color: primaryColor),
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: primaryColor),
+      body: Container(
+        // AJOUT DU DÉGRADÉ DE FOND
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [d_backgroundTop, d_backgroundBottom],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              TextField(
+                decoration: InputDecoration(
+                  hintText: 'Rechercher un professionnel...',
+                  prefixIcon: const Icon(Icons.search, color: primaryColor),
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: primaryColor),
+                  ),
+                  focusedBorder: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(12),
+                    borderSide: BorderSide(color: primaryColor, width: 2),
+                  ),
+                  filled: true, // Fond blanc pour le champ
+                  fillColor: Colors.white,
                 ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: primaryColor, width: 2),
-                ),
-              ),
-              onSubmitted: (query) {
-                if (query.toLowerCase().contains("électricien")) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const ProfessionalPage()),
-                  );
-                } else if (query.toLowerCase().contains("maçon") || query.toLowerCase().contains("macon")) {
-                  Navigator.push(
-                    context,
-                    MaterialPageRoute(builder: (context) => const MaconPage()),
-                  );
-                } else {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    SnackBar(
-                      content: Text('Aucun professionnel trouvé pour "$query"'),
-                      backgroundColor: dangerColor,
-                      action: SnackBarAction(
-                        label: 'Réessayer', 
-                        onPressed: () {},
-                        textColor: Colors.white,
-                      ),
-                    ),
-                  );
-                }
-              },
-            ),
-            const SizedBox(height: 24),
-            Card(
-              elevation: 2,
-              shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: [
-                    GestureDetector(
-                      onTap: _pickProfileImage,
-                      child: CircleAvatar(
-                        radius: 40,
-                        backgroundColor: secondaryColor.withOpacity(0.2),
-                        backgroundImage: _profileImage != null
-                            ? FileImage(_profileImage!)
-                            : const AssetImage('assets/images/femme_1.jpeg') as ImageProvider,
-                        child: _profileImage == null
-                            ? const Icon(Icons.camera_alt, size: 24, color: primaryColor)
-                            : null,
-                      ),
-                    ),
-                    const SizedBox(width: 16),
-                    Expanded(
-                      child: Column(
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(_name, 
-                            style: GoogleFonts.poppins(
-                              fontSize: 20, 
-                              fontWeight: FontWeight.bold,
-                              color: primaryColor,
-                            )),
-                          Text('Client à la recherche de pros', 
-                            style: GoogleFonts.poppins(color: Colors.grey[700])),
-                        ],
-                      ),
-                    ),
-                  ],
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
-            Text('À propos de vous', 
-              style: GoogleFonts.poppins(
-                fontSize: 16,
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              )),
-            const SizedBox(height: 8),
-            Text(
-              _about,
-              style: GoogleFonts.poppins(),
-            ),
-            const SizedBox(height: 24),
-            ElevatedButton.icon(
-              style: ElevatedButton.styleFrom(
-                backgroundColor: accentColor,
-                foregroundColor: Colors.black,
-                minimumSize: const Size(double.infinity, 50),
-                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
-              ),
-              onPressed: () {
-                showDialog(
-                  context: context,
-                  builder: (context) {
-                    String selectedPro = 'Électricien';
-                    String message = '';
-                    return AlertDialog(
-                      title: Text('Demande de service rapide', 
-                        style: GoogleFonts.poppins(
-                          color: primaryColor,
-                          fontWeight: FontWeight.bold,
-                        )),
-                      content: Column(
-                        mainAxisSize: MainAxisSize.min,
-                        children: [
-                          DropdownButtonFormField<String>(
-                            value: selectedPro,
-                            items: categories
-                                .where((cat) => cat != 'Tous')
-                                .map((category) => DropdownMenuItem(
-                                      value: category, 
-                                      child: Text(category),
-                                    ))
-                                .toList(),
-                            onChanged: (val) => selectedPro = val!,
-                            decoration: InputDecoration(
-                              labelText: 'Catégorie',
-                              labelStyle: TextStyle(color: primaryColor),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor, width: 2),
-                              ),
-                            ),
-                          ),
-                          const SizedBox(height: 16),
-                          TextField(
-                            decoration: InputDecoration(
-                              labelText: 'Message au professionnel',
-                              labelStyle: TextStyle(color: primaryColor),
-                              border: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor),
-                              ),
-                              focusedBorder: OutlineInputBorder(
-                                borderSide: BorderSide(color: primaryColor, width: 2),
-                              ),
-                            ),
-                            onChanged: (val) => message = val,
-                          ),
-                        ],
-                      ),
-                      actions: [
-                        TextButton(
-                          onPressed: () => Navigator.pop(context), 
-                          child: const Text('Annuler'),
-                          style: TextButton.styleFrom(foregroundColor: dangerColor),
-                        ),
-                        ElevatedButton(
-                          onPressed: () {
-                            Navigator.pop(context);
-                            ScaffoldMessenger.of(context).showSnackBar(
-                              SnackBar(
-                                content: Text('Demande envoyée à un $selectedPro'),
-                                backgroundColor: successColor,
-                              ),
-                            );
-                          },
-                          child: const Text('Envoyer'),
-                          style: ElevatedButton.styleFrom(backgroundColor: successColor),
-                        ),
-                      ],
+                onSubmitted: (query) {
+                  if (query.toLowerCase().contains("électricien")) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const ProfessionalPage()),
                     );
-                  },
-                );
-              },
-              icon: const Icon(Icons.send),
-              label: const Text('Demande de service rapide'),
-            ),
-            const SizedBox(height: 24),
-            Text('Catégorie de professionnels', 
-              style: GoogleFonts.poppins(
-                fontSize: 18, 
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              )),
-            const SizedBox(height: 8),
-            DropdownButtonFormField<String>(
-              value: selectedCategory,
-              items: categories
-                  .map((category) => DropdownMenuItem(
-                        value: category, 
-                        child: Text(category),
-                      ))
-                  .toList(),
-              onChanged: (value) => setState(() => selectedCategory = value!),
-              decoration: InputDecoration(
-                border: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: primaryColor),
-                ),
-                focusedBorder: OutlineInputBorder(
-                  borderRadius: BorderRadius.circular(12),
-                  borderSide: BorderSide(color: primaryColor, width: 2),
+                  } else if (query.toLowerCase().contains("maçon") || query.toLowerCase().contains("macon")) {
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const MaconPage()),
+                    );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                      SnackBar(
+                        content: Text('Aucun professionnel trouvé pour "$query"'),
+                        backgroundColor: dangerColor,
+                        action: SnackBarAction(
+                          label: 'Réessayer', 
+                          onPressed: () {},
+                          textColor: Colors.white,
+                        ),
+                      ),
+                    );
+                  }
+                },
+              ),
+              const SizedBox(height: 24),
+              Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(12)),
+                color: Colors.white, // Fond blanc
+                child: Padding(
+                  padding: const EdgeInsets.all(16),
+                  child: Row(
+                    children: [
+                      GestureDetector(
+                        onTap: _pickProfileImage,
+                        child: CircleAvatar(
+                          radius: 40,
+                          backgroundColor: secondaryColor.withOpacity(0.2),
+                          backgroundImage: _profileImage != null
+                              ? FileImage(_profileImage!)
+                              : const AssetImage('assets/images/femme_1.jpeg') as ImageProvider,
+                          child: _profileImage == null
+                              ? const Icon(Icons.camera_alt, size: 24, color: primaryColor)
+                              : null,
+                        ),
+                      ),
+                      const SizedBox(width: 16),
+                      Expanded(
+                        child: Column(
+                          crossAxisAlignment: CrossAxisAlignment.start,
+                          children: [
+                            Text(_name, 
+                              style: GoogleFonts.poppins(
+                                fontSize: 20, 
+                                fontWeight: FontWeight.bold,
+                                color: primaryColor,
+                              )),
+                            Text('Client à la recherche de pros', 
+                              style: GoogleFonts.poppins(color: Colors.grey[700])),
+                          ],
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              dropdownColor: secondaryColor.withOpacity(0.1),
-            ),
-            const SizedBox(height: 24),
-            _buildProfessionalSuggestion(),
-            const SizedBox(height: 24),
-            _buildMapCard(),
-          ],
+              const SizedBox(height: 20),
+              Text('À propos de vous', 
+                style: GoogleFonts.poppins(
+                  fontSize: 16,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                )),
+              const SizedBox(height: 8),
+              Text(
+                _about,
+                style: GoogleFonts.poppins(),
+              ),
+              const SizedBox(height: 24),
+              ElevatedButton.icon(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: accentColor,
+                  foregroundColor: Colors.black,
+                  minimumSize: const Size(double.infinity, 50),
+                  shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(10)),
+                ),
+                onPressed: () {
+                  showDialog(
+                    context: context,
+                    builder: (context) {
+                      String selectedPro = 'Électricien';
+                      String message = '';
+                      return AlertDialog(
+                        title: Text('Demande de service rapide', 
+                          style: GoogleFonts.poppins(
+                            color: primaryColor,
+                            fontWeight: FontWeight.bold,
+                          )),
+                        content: Column(
+                          mainAxisSize: MainAxisSize.min,
+                          children: [
+                            DropdownButtonFormField<String>(
+                              value: selectedPro,
+                              items: categories
+                                  .where((cat) => cat != 'Tous')
+                                  .map((category) => DropdownMenuItem(
+                                        value: category, 
+                                        child: Text(category),
+                                      ))
+                                  .toList(),
+                              onChanged: (val) => selectedPro = val!,
+                              decoration: InputDecoration(
+                                labelText: 'Catégorie',
+                                labelStyle: TextStyle(color: primaryColor),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor, width: 2),
+                                ),
+                                filled: true, // Fond blanc
+                                fillColor: Colors.white,
+                              ),
+                            ),
+                            const SizedBox(height: 16),
+                            TextField(
+                              decoration: InputDecoration(
+                                labelText: 'Message au professionnel',
+                                labelStyle: TextStyle(color: primaryColor),
+                                border: OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor),
+                                ),
+                                focusedBorder: OutlineInputBorder(
+                                  borderSide: BorderSide(color: primaryColor, width: 2),
+                                ),
+                                filled: true, // Fond blanc
+                                fillColor: Colors.white,
+                              ),
+                              onChanged: (val) => message = val,
+                            ),
+                          ],
+                        ),
+                        actions: [
+                          TextButton(
+                            onPressed: () => Navigator.pop(context), 
+                            child: const Text('Annuler'),
+                            style: TextButton.styleFrom(foregroundColor: dangerColor),
+                          ),
+                          ElevatedButton(
+                            onPressed: () {
+                              Navigator.pop(context);
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                SnackBar(
+                                  content: Text('Demande envoyée à un $selectedPro'),
+                                  backgroundColor: successColor,
+                                ),
+                              );
+                            },
+                            child: const Text('Envoyer'),
+                            style: ElevatedButton.styleFrom(backgroundColor: successColor),
+                          ),
+                        ],
+                      );
+                    },
+                  );
+                },
+                icon: const Icon(Icons.send),
+                label: const Text('Demande de service rapide'),
+              ),
+              const SizedBox(height: 24),
+              Text('Catégorie de professionnels', 
+                style: GoogleFonts.poppins(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                )),
+              const SizedBox(height: 8),
+              Card(
+                elevation: 2,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(12),
+                ),
+                color: Colors.white, // Fond blanc
+                child: Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 12),
+                  child: DropdownButtonFormField<String>(
+                    value: selectedCategory,
+                    items: categories
+                        .map((category) => DropdownMenuItem(
+                              value: category, 
+                              child: Text(category),
+                            ))
+                        .toList(),
+                    onChanged: (value) => setState(() => selectedCategory = value!),
+                    decoration: const InputDecoration(
+                      border: InputBorder.none,
+                      filled: true, // Fond blanc
+                      fillColor: Colors.white,
+                    ),
+                    dropdownColor: Colors.white,
+                  ),
+                ),
+              ),
+              const SizedBox(height: 24),
+              _buildProfessionalSuggestion(),
+              const SizedBox(height: 24),
+              _buildMapCard(),
+            ],
+          ),
         ),
       ),
     );

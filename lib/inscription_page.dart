@@ -28,9 +28,9 @@ class _InscriptionPageState extends State<InscriptionPage> {
 
   final FirebaseAuth _auth = FirebaseAuth.instance;
 
-  // Couleurs du design
+  // ✅ Couleurs modifiées pour cohérence avec Welcome & Connexion
   final Color primaryColor = const Color.fromARGB(255, 83, 17, 190);
-  final Color backgroundColor = const Color(0xFFF8F9FA);
+  final Color backgroundColor = const Color(0xFFEAF1F8); // Couleur de fond modifiée
   final Color cardColor = Colors.white;
   final Color textColor = const Color(0xFF343A40);
   final Color accentColor = const Color(0xFF6C757D);
@@ -85,7 +85,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                
                 TanosAnimation(
                   delay: 1000,
                   child: Text(
@@ -98,7 +97,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                   ),
                 ),
                 const SizedBox(height: 10),
-                
                 TanosAnimation(
                   delay: 1200,
                   child: Text(
@@ -110,8 +108,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                
-                // Formulaire
                 TanosAnimation(
                   delay: 1400,
                   child: Container(
@@ -137,7 +133,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                           validator: (value) => value!.isEmpty ? 'Nom requis' : null,
                         ),
                         const SizedBox(height: 15),
-                        
                         _buildInputField(
                           controller: prenomController,
                           label: 'Prénom',
@@ -145,7 +140,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                           validator: (value) => value!.isEmpty ? 'Prénom requis' : null,
                         ),
                         const SizedBox(height: 15),
-                        
                         _buildInputField(
                           controller: emailController,
                           label: 'Email',
@@ -155,7 +149,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                               value!.contains('@') ? null : 'Email invalide',
                         ),
                         const SizedBox(height: 15),
-                        
                         _buildInputField(
                           controller: usernameController,
                           label: 'Nom d\'utilisateur',
@@ -164,10 +157,8 @@ class _InscriptionPageState extends State<InscriptionPage> {
                               value!.isEmpty ? 'Nom d\'utilisateur requis' : null,
                         ),
                         const SizedBox(height: 15),
-                        
                         _buildRoleSelector(),
                         const SizedBox(height: 15),
-                        
                         _buildPasswordField(
                           controller: passwordController,
                           label: 'Mot de passe',
@@ -177,7 +168,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                               value!.length < 6 ? 'Minimum 6 caractères' : null,
                         ),
                         const SizedBox(height: 15),
-                        
                         _buildPasswordField(
                           controller: confirmPasswordController,
                           label: 'Confirmer le mot de passe',
@@ -191,7 +181,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                   ),
                 ),
                 const SizedBox(height: 30),
-                
                 TanosAnimation(
                   delay: 2200,
                   child: ElevatedButton(
@@ -216,7 +205,6 @@ class _InscriptionPageState extends State<InscriptionPage> {
                   ),
                 ),
                 const SizedBox(height: 20),
-                
                 TanosAnimation(
                   delay: 2400,
                   child: Row(
@@ -371,7 +359,7 @@ class _InscriptionPageState extends State<InscriptionPage> {
           email: emailController.text.trim(),
           password: passwordController.text.trim(),
         );
-        
+
         // Redirection après inscription
         if (selectedRole == 'professionnel') {
           Navigator.pushReplacement(
@@ -403,6 +391,3 @@ class _InscriptionPageState extends State<InscriptionPage> {
     }
   }
 }
-
-
-

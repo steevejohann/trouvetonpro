@@ -17,6 +17,10 @@ const Color accentColor = Color(0xFFFFC107); // Jaune doré
 const Color successColor = Color(0xFF4CAF50); // Vert
 const Color dangerColor = Color(0xFFF44336); // Rouge
 
+// Nouveaux dégradés de fond
+const d_backgroundTop = Color(0xFFEAF1F8);
+const d_backgroundBottom = Color(0xFFFFFFFF);
+
 class ProfessionalPage extends StatefulWidget {
   const ProfessionalPage({super.key});
 
@@ -590,6 +594,7 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
     return Card(
       margin: const EdgeInsets.only(bottom: 12),
       elevation: 3,
+      color: Colors.white,
       child: Padding(
         padding: const EdgeInsets.all(12),
         child: Column(
@@ -761,143 +766,119 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
           ),
         ],
       ),
-      body: SingleChildScrollView(
-        padding: const EdgeInsets.all(16),
-        child: Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          children: [
-            Text('Bienvenue, M. $name',
-              style: GoogleFonts.poppins(
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              ),
-            ),
-            const SizedBox(height: 16),
-
-            if (currentPosition != null)
-              Text(
-                'Position actuelle: (${currentPosition!.latitude}, ${currentPosition!.longitude})',
+      body: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+            colors: [d_backgroundTop, d_backgroundBottom],
+            stops: [0.0, 0.6],
+          ),
+        ),
+        child: SingleChildScrollView(
+          padding: const EdgeInsets.all(16),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: [
+              Text('Bienvenue, M. $name',
                 style: GoogleFonts.poppins(
-                  fontSize: 14,
-                  fontStyle: FontStyle.italic,
-                  color: Colors.grey[700],
+                  fontSize: 24,
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
                 ),
               ),
+              const SizedBox(height: 16),
 
-            Card(
-              elevation: 4,
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(15),
-                side: BorderSide(color: secondaryColor, width: 1),
-              ),
-              child: ListTile(
-                leading: GestureDetector(
-                  onTap: _pickProfileImage,
-                  child: CircleAvatar(
-                    radius: 35,
-                    backgroundColor: secondaryColor.withOpacity(0.2),
-                    backgroundImage: profileImage != null
-                        ? FileImage(profileImage!)
-                        : const AssetImage('assets/images/electricien_1.jpg') as ImageProvider,
-                    child: profileImage == null
-                        ? const Icon(Icons.person, size: 30, color: primaryColor)
-                        : null,
-                  ),
-                ),
-                title: Text(
-                  name,
+              if (currentPosition != null)
+                Text(
+                  'Position actuelle: (${currentPosition!.latitude}, ${currentPosition!.longitude})',
                   style: GoogleFonts.poppins(
-                    fontWeight: FontWeight.bold,
-                    color: primaryColor,
+                    fontSize: 14,
+                    fontStyle: FontStyle.italic,
+                    color: Colors.grey[700],
                   ),
                 ),
-                subtitle: Text(
-                  status,
-                  style: GoogleFonts.poppins(color: Colors.grey[700]),
-                ),
-                trailing: IconButton(
-                  icon: Icon(Icons.edit, color: Color(0xFF0D47A1)),
-                  onPressed: () => _editField('nom', name, (val) => setState(() => name = val)),
-                ),
-              ),
-            ),
-            const SizedBox(height: 20),
 
-            // Section des photos supplémentaires
-            Container(
-              margin: const EdgeInsets.symmetric(vertical: 10),
-              padding: const EdgeInsets.all(12),
-              height: 200,
-              decoration: BoxDecoration(
-                color: Colors.grey[100],
-                borderRadius: BorderRadius.circular(12),
-                border: Border.all(color: secondaryColor.withOpacity(0.3)),
+              Card(
+                elevation: 4,
+                color: Colors.white,
+                shape: RoundedRectangleBorder(
+                  borderRadius: BorderRadius.circular(15),
+                  side: BorderSide(color: secondaryColor, width: 1),
+                ),
+                child: ListTile(
+                  leading: GestureDetector(
+                    onTap: _pickProfileImage,
+                    child: CircleAvatar(
+                      radius: 35,
+                      backgroundColor: secondaryColor.withOpacity(0.2),
+                      backgroundImage: profileImage != null
+                          ? FileImage(profileImage!)
+                          : const AssetImage('assets/images/electricien_1.jpg') as ImageProvider,
+                      child: profileImage == null
+                          ? const Icon(Icons.person, size: 30, color: primaryColor)
+                          : null,
+                    ),
+                  ),
+                  title: Text(
+                    name,
+                    style: GoogleFonts.poppins(
+                      fontWeight: FontWeight.bold,
+                      color: primaryColor,
+                    ),
+                  ),
+                  subtitle: Text(
+                    status,
+                    style: GoogleFonts.poppins(color: Colors.grey[700]),
+                  ),
+                  trailing: IconButton(
+                    icon: Icon(Icons.edit, color: Color(0xFF0D47A1)),
+                    onPressed: () => _editField('nom', name, (val) => setState(() => name = val)),
+                  ),
+                ),
               ),
-              child: ListView(
-                shrinkWrap: true,
-                scrollDirection: Axis.horizontal,
-                children: <Widget>[
-                  Container(
-                    width: 160,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/realisationelec_1.jpg'),
-                        fit: BoxFit.cover,
+              const SizedBox(height: 20),
+
+              // Section des photos supplémentaires
+              Container(
+                margin: const EdgeInsets.symmetric(vertical: 10),
+                padding: const EdgeInsets.all(12),
+                height: 200,
+                decoration: BoxDecoration(
+                  color: Colors.grey[100]!.withOpacity(0.7),
+                  borderRadius: BorderRadius.circular(12),
+                  border: Border.all(color: secondaryColor.withOpacity(0.3)),
+                ),
+                child: ListView(
+                  shrinkWrap: true,
+                  scrollDirection: Axis.horizontal,
+                  children: <Widget>[
+                    Container(
+                      width: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/images/realisationelec_1.jpg'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                  const SizedBox(width: 10),
-                  Container(
-                    width: 160,
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(8),
-                      image: const DecorationImage(
-                        image: AssetImage('assets/images/realisationelec_2.jpg'),
-                        fit: BoxFit.cover,
+                    const SizedBox(width: 10),
+                    Container(
+                      width: 160,
+                      decoration: BoxDecoration(
+                        borderRadius: BorderRadius.circular(8),
+                        image: const DecorationImage(
+                          image: AssetImage('assets/images/realisationelec_2.jpg'),
+                          fit: BoxFit.cover,
+                        ),
                       ),
                     ),
-                  ),
-                ],
+                  ],
+                ),
               ),
-            ),
-            const SizedBox(height: 10),
-            Text('Mes réalisations', 
-              style: GoogleFonts.poppins(
-                fontSize: 18, 
-                fontWeight: FontWeight.bold,
-                color: primaryColor,
-              ),
-            ),
-            const SizedBox(height: 8),
-            SizedBox(
-              height: 160,
-              child: realisations.isEmpty 
-                  ? _buildAddPhotoButton()
-                  : ListView(
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        ...realisations.map((file) => _buildImageItem(file)),
-                        _buildAddPhotoButton(),
-                      ],
-                    ),
-            ),
-
-            const SizedBox(height: 24),
-            Text('Mes services', style: GoogleFonts.poppins(
-              fontSize: 18, 
-              fontWeight: FontWeight.bold,
-              color: primaryColor,
-            )),
-            const SizedBox(height: 8),
-            _buildServiceCard(service1, price1),
-            _buildServiceCard(service2, price2),
-
-            // Nouvelle section pour les demandes de devis
-            if (devisRequests.isNotEmpty) ...[
-              const SizedBox(height: 24),
-              Text('Demandes de devis', 
+              const SizedBox(height: 10),
+              Text('Mes réalisations', 
                 style: GoogleFonts.poppins(
                   fontSize: 18, 
                   fontWeight: FontWeight.bold,
@@ -905,134 +886,169 @@ class _ProfessionalPageState extends State<ProfessionalPage> {
                 ),
               ),
               const SizedBox(height: 8),
-              ...devisRequests.map((devis) => _buildDevisCard(devis)).toList(),
-            ],
-            
-            const SizedBox(height: 24),
-            Text('Noter ce professionnel', 
-              style: GoogleFonts.poppins(
+              SizedBox(
+                height: 160,
+                child: realisations.isEmpty 
+                    ? _buildAddPhotoButton()
+                    : ListView(
+                        scrollDirection: Axis.horizontal,
+                        children: [
+                          ...realisations.map((file) => _buildImageItem(file)),
+                          _buildAddPhotoButton(),
+                        ],
+                      ),
+              ),
+
+              const SizedBox(height: 24),
+              Text('Mes services', style: GoogleFonts.poppins(
                 fontSize: 18, 
                 fontWeight: FontWeight.bold,
                 color: primaryColor,
-              ),
-            ),
-            _buildRatingBar(),
-            const SizedBox(height: 12),
-            _buildCommentBox(),
+              )),
+              const SizedBox(height: 8),
+              _buildServiceCard(service1, price1),
+              _buildServiceCard(service2, price2),
 
-            const SizedBox(height: 24),
-            Text('Demandes récentes', 
-              style: GoogleFonts.poppins(
+              // Nouvelle section pour les demandes de devis
+              if (devisRequests.isNotEmpty) ...[
+                const SizedBox(height: 24),
+                Text('Demandes de devis', 
+                  style: GoogleFonts.poppins(
+                    fontSize: 18, 
+                    fontWeight: FontWeight.bold,
+                    color: primaryColor,
+                  ),
+                ),
+                const SizedBox(height: 8),
+                ...devisRequests.map((devis) => _buildDevisCard(devis)).toList(),
+              ],
+              
+              const SizedBox(height: 24),
+              Text('Noter ce professionnel', 
+                style: GoogleFonts.poppins(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                ),
+              ),
+              _buildRatingBar(),
+              const SizedBox(height: 12),
+              _buildCommentBox(),
+
+              const SizedBox(height: 24),
+              Text('Demandes récentes', 
+                style: GoogleFonts.poppins(
+                  fontSize: 18, 
+                  fontWeight: FontWeight.bold,
+                  color: primaryColor,
+                ),
+              ),
+              const SizedBox(height: 8),
+              ListTile(
+                title: Text('Branchement défectueux à réparer', 
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                subtitle: Text('Client: Paul Bongo | Libreville', 
+                  style: GoogleFonts.poppins(color: Colors.grey[600])),
+                trailing: ElevatedButton(
+                  onPressed: () => _repondreClient('Branchement défectueux', 'Paul Bongo'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: successColor,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Répondre'),
+                ),
+              ),
+              ListTile(
+                title: Text('Pose de prises électriques', 
+                  style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
+                subtitle: Text('Client: Alice Nguema | Akanda', 
+                  style: GoogleFonts.poppins(color: Colors.grey[600])),
+                trailing: ElevatedButton(
+                  onPressed: () => _repondreClient('Pose de prises électriques', 'Alice Nguema'),
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: successColor,
+                    foregroundColor: Colors.white,
+                  ),
+                  child: const Text('Répondre'),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+              Text('Évaluations clients', style: GoogleFonts.poppins(
                 fontSize: 18, 
                 fontWeight: FontWeight.bold,
                 color: primaryColor,
-              ),
-            ),
-            const SizedBox(height: 8),
-            ListTile(
-              title: Text('Branchement défectueux à réparer', 
-                style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-              subtitle: Text('Client: Paul Bongo | Libreville', 
-                style: GoogleFonts.poppins(color: Colors.grey[600])),
-              trailing: ElevatedButton(
-                onPressed: () => _repondreClient('Branchement défectueux', 'Paul Bongo'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: successColor,
-                  foregroundColor: Colors.white,
+              )),
+              const SizedBox(height: 8),
+              ListTile(
+                leading: const Icon(Icons.star, color: Colors.amber),
+                title: Text('$rating / 5', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
+                subtitle: Text(
+                  commentaire.isNotEmpty ? commentaire : 'Laisser votre avis sur ce professionnel.',
+                  style: GoogleFonts.poppins(),
                 ),
-                child: const Text('Répondre'),
               ),
-            ),
-            ListTile(
-              title: Text('Pose de prises électriques', 
-                style: GoogleFonts.poppins(fontWeight: FontWeight.w500)),
-              subtitle: Text('Client: Alice Nguema | Akanda', 
-                style: GoogleFonts.poppins(color: Colors.grey[600])),
-              trailing: ElevatedButton(
-                onPressed: () => _repondreClient('Pose de prises électriques', 'Alice Nguema'),
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: successColor,
-                  foregroundColor: Colors.white,
-                ),
-                child: const Text('Répondre'),
-              ),
-            ),
 
-            const SizedBox(height: 24),
-            Text('Évaluations clients', style: GoogleFonts.poppins(
-              fontSize: 18, 
-              fontWeight: FontWeight.bold,
-              color: primaryColor,
-            )),
-            const SizedBox(height: 8),
-            ListTile(
-              leading: const Icon(Icons.star, color: Colors.amber),
-              title: Text('$rating / 5', style: GoogleFonts.poppins(fontWeight: FontWeight.bold)),
-              subtitle: Text(
-                commentaire.isNotEmpty ? commentaire : 'Laisser votre avis sur ce professionnel.',
-                style: GoogleFonts.poppins(),
-              ),
-            ),
-
-            // Bouton de soumission d'avis
-            const SizedBox(height: 20),
-            Center(
-              child: ElevatedButton.icon(
-                onPressed: () {
-                  if (commentaire.isNotEmpty) {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Avis soumis avec succès'),
-                        backgroundColor: successColor,
-                      ),
-                    );
-                  } else {
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(
-                        content: Text('Veuillez écrire un commentaire'),
-                        backgroundColor: dangerColor,
-                      ),
-                    );
-                  }
-                },
-                style: ElevatedButton.styleFrom(
-                  backgroundColor: accentColor,
-                  foregroundColor: Colors.black,
-                  padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
-                ),
-                icon: const Icon(Icons.send),
-                label: const Text('Soumettre mon avis'),
-              ),
-            ),
-
-            const SizedBox(height: 24),
-            Text('Publicité', style: GoogleFonts.poppins(
-              fontSize: 18, 
-              fontWeight: FontWeight.bold,
-              color: primaryColor,
-            )),
-            const SizedBox(height: 8),
-            CarouselSlider(
-              options: CarouselOptions(height: 180, autoPlay: true, enlargeCenterPage: true),
-              items: imageList.map((item) {
-                return Builder(
-                  builder: (BuildContext context) {
-                    return Container(
-                      width: MediaQuery.of(context).size.width,
-                      margin: const EdgeInsets.symmetric(horizontal: 5.0),
-                      decoration: BoxDecoration(
-                        borderRadius: BorderRadius.circular(8),
-                        image: DecorationImage(
-                          image: AssetImage(item),
-                          fit: BoxFit.cover,
+              // Bouton de soumission d'avis
+              const SizedBox(height: 20),
+              Center(
+                child: ElevatedButton.icon(
+                  onPressed: () {
+                    if (commentaire.isNotEmpty) {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Avis soumis avec succès'),
+                          backgroundColor: successColor,
                         ),
-                      ),
-                    );
+                      );
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          content: Text('Veuillez écrire un commentaire'),
+                          backgroundColor: dangerColor,
+                        ),
+                      );
+                    }
                   },
-                );
-              }).toList(),
-            ),
-          ],
+                  style: ElevatedButton.styleFrom(
+                    backgroundColor: accentColor,
+                    foregroundColor: Colors.black,
+                    padding: const EdgeInsets.symmetric(horizontal: 24, vertical: 12),
+                  ),
+                  icon: const Icon(Icons.send),
+                  label: const Text('Soumettre mon avis'),
+                ),
+              ),
+
+              const SizedBox(height: 24),
+              Text('Publicité', style: GoogleFonts.poppins(
+                fontSize: 18, 
+                fontWeight: FontWeight.bold,
+                color: primaryColor,
+              )),
+              const SizedBox(height: 8),
+              CarouselSlider(
+                options: CarouselOptions(height: 180, autoPlay: true, enlargeCenterPage: true),
+                items: imageList.map((item) {
+                  return Builder(
+                    builder: (BuildContext context) {
+                      return Container(
+                        width: MediaQuery.of(context).size.width,
+                        margin: const EdgeInsets.symmetric(horizontal: 5.0),
+                        decoration: BoxDecoration(
+                          borderRadius: BorderRadius.circular(8),
+                          image: DecorationImage(
+                            image: AssetImage(item),
+                            fit: BoxFit.cover,
+                          ),
+                        ),
+                      );
+                    },
+                  );
+                }).toList(),
+              ),
+            ],
+          ),
         ),
       ),
     );

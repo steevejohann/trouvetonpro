@@ -4,8 +4,9 @@ import 'connexion_page.dart';
 import 'tanos_animation.dart';
 
 const d_red = Color(0xFFE9717D);
-const d_backgroundTop = Color(0xFF1E2A38);
-const d_backgroundBottom = Color(0xFFEEF1F5);
+// 🎨 Nouvelle couleur de fond adaptée au design
+const d_backgroundTop = Color(0xFFEAF1F8); // Bleu très clair
+const d_backgroundBottom = Color(0xFFFFFFFF); // Blanc
 
 class WelcomePage extends StatelessWidget {
   const WelcomePage({Key? key}) : super(key: key);
@@ -116,4 +117,3 @@ class WelcomePage extends StatelessWidget {
     );
   }
 }
-
